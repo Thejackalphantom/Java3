@@ -1,0 +1,7 @@
+UML: Stellarbody moet abstract zijn, pijltjes van abstracte klasse staan verkeerd en moeten naar de abstracte klasse toe, niet ervan af.
+	 Abstracte classe moest ook cursief.
+	 Maak verder ook een Interface voor distance calculatie
+	 
+Testcasediagram: Na het maken van sterren, maak een nieuw diagram met voorwaarde dat er een ster gemaakt is, ga dan verder zoals de oude
+
+Verder moet er ook nog een fysieke testcases worden gemaakt
