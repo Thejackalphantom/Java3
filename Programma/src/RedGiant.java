@@ -8,5 +8,4 @@ public class RedGiant extends Star
         super(starName, starTemperature, starMass, solarRadius);
         starColor = "red";
     }
-
 }
