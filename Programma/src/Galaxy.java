@@ -19,4 +19,8 @@ public class Galaxy
     {
         this.solarSystemName = solarSystemName;
     }
+
+    public String getGalaxyName() {
+        return galaxyName;
+    }
 }

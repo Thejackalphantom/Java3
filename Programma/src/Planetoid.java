@@ -1,2 +1,9 @@
-public class Planetoid {
+abstract class Planetoid {
+
+    String planetoidName;
+
+    public Planetoid()
+    {
+
+    }
 }
