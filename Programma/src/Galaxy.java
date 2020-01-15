@@ -15,7 +15,7 @@ public class Galaxy
     }
 
     //Adds new solarSystem to the ArrayList
-    public void CreateSolarSytem(String solarSystemName)
+    public void CreateSolarSystem(String solarSystemName)
     {
         solarSystems.add(new SolarSystem(solarSystemName));
     }

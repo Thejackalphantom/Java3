@@ -103,7 +103,7 @@ public class Main_GUI
                     int galaxyComboIndex = galaxyNameList.getSelectedIndex();
 
                     Galaxy targetGalaxy = galaxies.get(galaxyComboIndex);
-                    targetGalaxy.CreateSolarSytem(solarSystemNameField.getText());
+                    targetGalaxy.CreateSolarSystem(solarSystemNameField.getText());
                     populateSolarSystemComboBox();
                     solarSystemNameField.setText(null);
                 }
