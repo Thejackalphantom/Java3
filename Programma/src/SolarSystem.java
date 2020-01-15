@@ -34,9 +34,7 @@ public class SolarSystem
         }
     }
 
-    //checks if a star can supernova
-    public boolean CanSuperNova(ArrayList<Star> stars)
-    {
-        return true;
+    public String getSolarSystemName() {
+        return solarSystemName;
     }
 }
