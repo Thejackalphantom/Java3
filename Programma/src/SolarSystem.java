@@ -34,7 +34,9 @@ public class SolarSystem
         }
     }
 
-    public String getSolarSystemName() {
-        return solarSystemName;
+    @Override
+    public String toString()
+    {
+        return this.solarSystemName;
     }
 }

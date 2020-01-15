@@ -51,6 +51,7 @@ public class Main_GUI
             {
                createGalaxy(galaxyNameField.getText());
                galaxyNameField.setText(null);
+               populateGalaxyComboBox();
             }
         });
 
@@ -60,10 +61,14 @@ public class Main_GUI
             public void actionPerformed(ActionEvent actionEvent) {
                 //While galaxyComboIndex is used in other methods, it cannot be used outside of this scope
                 // within actionPerformed otherwise the integer is null
-                int galaxyComboIndex = galaxyNameList.getSelectedIndex();
-                //Remove the selected index in galaxies
-                galaxies.remove(galaxyComboIndex);
-                populateGalaxyComboBox();
+                if(!galaxies.isEmpty())
+                {
+                    int galaxyComboIndex = galaxyNameList.getSelectedIndex();
+                    //Remove the selected index in galaxies
+                    galaxies.remove(galaxyComboIndex);
+                    populateGalaxyComboBox();
+                    populateSolarSystemComboBox();
+                }
             }
         });
         createSolarSystemButton.addActionListener(new ActionListener() {
@@ -76,7 +81,6 @@ public class Main_GUI
 
                     Galaxy targetGalaxy = galaxies.get(galaxyComboIndex);
                     targetGalaxy.CreateSolarSytem(solarSystemNameField.getText());
-                    System.out.println(targetGalaxy.solarSystems.toString());
                     populateSolarSystemComboBox();
                     solarSystemNameField.setText(null);
                 }
@@ -88,10 +92,9 @@ public class Main_GUI
 
             }
         });
-        galaxyNameList.addItemListener(new ItemListener() {
+        galaxyNameList.addActionListener(new ActionListener() {
             @Override
-            //Repopulate solar system combo box whenver the galaxy changes
-            public void itemStateChanged(ItemEvent itemEvent) {
+            public void actionPerformed(ActionEvent actionEvent) {
                 populateSolarSystemComboBox();
             }
         });
@@ -103,7 +106,6 @@ public class Main_GUI
         if(!galaxyName.isEmpty())
         {
             galaxies.add(new Galaxy(galaxyName));
-            populateGalaxyComboBox();
         }
         //Give an error otherwise
         else
@@ -117,10 +119,11 @@ public class Main_GUI
         //This populates the galaxy combo box after a removal or addition to the arrayList
         //The combo list only displays the galaxy's name and is used to select the specific galaxies
         galaxyNameList.removeAllItems();
-        for(Galaxy galaxy : galaxies)
-        {
-            //For each galaxy in the galaxies array list, add the name of the galaxy to the combo box
-            galaxyNameList.addItem(galaxy.getGalaxyName());
+        if(!galaxies.isEmpty()) {
+            for (Galaxy galaxy : galaxies) {
+                //For each galaxy in the galaxies array list, add the name of the galaxy to the combo box
+                galaxyNameList.addItem(galaxy);
+            }
         }
     }
 
@@ -129,15 +132,28 @@ public class Main_GUI
         //This populates the solar system combo box after a removal or addition to the arrayList or whenever a new galaxy is selected
         //The combo list only displays the galaxy's name and is used to select the specific galaxies
         int galaxyComboIndex = galaxyNameList.getSelectedIndex();
-
-        Galaxy targetGalaxy = galaxies.get(galaxyComboIndex);
-
         solarSystemNameList.removeAllItems();
-        for(SolarSystem solarsystem : targetGalaxy.solarSystems)
+        if(!galaxies.isEmpty())
         {
-            //For each solar system in the solarSystem array list, add the name of the galaxy to the combo box
-            solarSystemNameList.addItem(solarsystem.getSolarSystemName());
+            Galaxy targetGalaxy;
+            try
+            {
+                targetGalaxy = galaxies.get(galaxyComboIndex);
+            }
+            catch (IndexOutOfBoundsException e)
+            {
+                targetGalaxy = galaxies.get(0);
+            }
+            if(!targetGalaxy.solarSystems.isEmpty())
+            {
+                for (SolarSystem solarsystem : targetGalaxy.solarSystems)
+                {
+                    //For each solar system in the solarSystem array list, add the name of the galaxy to the combo box
+                    solarSystemNameList.addItem(solarsystem);
+                }
+            }
         }
+
     }
 }
 

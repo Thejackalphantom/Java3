@@ -23,4 +23,10 @@ public class Galaxy
     public String getGalaxyName() {
         return galaxyName;
     }
+
+    @Override
+    public String toString()
+    {
+        return this.galaxyName;
+    }
 }
