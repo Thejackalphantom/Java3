@@ -25,6 +25,18 @@ public class Main_GUI
     private JTextField solarSystemNameField;
     private JPanel solarSystemSelectionPanel;
     private JComboBox solarSystemNameList;
+    private JPanel solarSystemOptionPanel;
+    private JButton deleteSolarSystemButton;
+    private JPanel starOptionPanel;
+    private JTextField starNameField;
+    private JButton createStarButton;
+    private JTextField starTempField;
+    private JTextField starMassField;
+    private JTextField starRadiusField;
+    private JLabel starNameLabel;
+    private JLabel starMassLabel;
+    private JLabel starRadiusLabel;
+    private JLabel starTempLabel;
 
     public static void main(String[] args)
     {
@@ -42,7 +54,7 @@ public class Main_GUI
         galaxies = new ArrayList<Galaxy>();
         //Get the index of the selected item in the galaxy combo box
 
-
+        //<editor-fold desc="Galaxy-related Elements">
         galaxyCreationButton.addActionListener(new ActionListener()
         {
             @Override
@@ -71,6 +83,17 @@ public class Main_GUI
                 }
             }
         });
+        galaxyNameList.addActionListener(new ActionListener() {
+            @Override
+            //This refreshes the solar system combo box whenever someone interacts with the combo box.
+            //We did not use onItemChange because in most cases this causes the commands to be executed twice.
+            public void actionPerformed(ActionEvent actionEvent) {
+                populateSolarSystemComboBox();
+            }
+        });
+        //</editor-fold>
+
+
         createSolarSystemButton.addActionListener(new ActionListener() {
             @Override
             //Create a solar system with a name.
@@ -92,14 +115,36 @@ public class Main_GUI
 
             }
         });
-        galaxyNameList.addActionListener(new ActionListener() {
+
+        deleteSolarSystemButton.addActionListener(new ActionListener() {
             @Override
+            //Remove the solar system in the solar system array
             public void actionPerformed(ActionEvent actionEvent) {
-                populateSolarSystemComboBox();
+                if(!galaxies.isEmpty())
+                {
+                    int galaxyComboIndex = galaxyNameList.getSelectedIndex();
+                    Galaxy targetGalaxy;
+                    try
+                    {
+                        targetGalaxy = galaxies.get(galaxyComboIndex);
+                    }
+                    catch (IndexOutOfBoundsException e)
+                    {
+                        targetGalaxy = galaxies.get(0);
+                    }
+                    if(!targetGalaxy.solarSystems.isEmpty()) {
+                        int solSysComboIndex = solarSystemNameList.getSelectedIndex();
+                        //Remove the selected index in solar system
+                        targetGalaxy.solarSystems.remove(solSysComboIndex);
+                        populateGalaxyComboBox();
+                        populateSolarSystemComboBox();
+                    }
+                }
             }
         });
     }
 
+    //<editor-fold desc="Galaxy-related Methods"
     public void createGalaxy(String galaxyName)
     {
         //Check if there's something in the galaxyNameField
@@ -127,6 +172,9 @@ public class Main_GUI
         }
     }
 
+    //</editor-fold>
+
+    //<editor-fold desc="Solar System-related Methods">
     public void populateSolarSystemComboBox()
     {
         //This populates the solar system combo box after a removal or addition to the arrayList or whenever a new galaxy is selected
@@ -150,10 +198,11 @@ public class Main_GUI
                 {
                     //For each solar system in the solarSystem array list, add the name of the galaxy to the combo box
                     solarSystemNameList.addItem(solarsystem);
+
                 }
             }
         }
-
     }
+    //</editor-fold>
 }
 
