@@ -1,11 +1,7 @@
-import javafx.scene.control.ComboBox;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalComboBoxIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class Main_GUI
@@ -93,7 +89,7 @@ public class Main_GUI
         });
         //</editor-fold>
 
-
+        //<editor-fold desc="Solar-System Elements">
         createSolarSystemButton.addActionListener(new ActionListener() {
             @Override
             //Create a solar system with a name.
@@ -142,9 +138,22 @@ public class Main_GUI
                 }
             }
         });
+        createStarButton.addActionListener(new ActionListener() {
+            @Override
+            //Create a star if all names, temp and such are valid
+            public void actionPerformed(ActionEvent e) {
+                //Check if none of the fields are empty.
+                if(!starNameField.getText().isEmpty() || !starMassField.getText().isEmpty()
+                    || !starRadiusField.getText().isEmpty() || !starTempField.getText().isEmpty())
+                {
+                    
+                }
+            }
+        });
     }
+    //</editor-fold>
 
-    //<editor-fold desc="Galaxy-related Methods"
+    //<editor-fold desc="Galaxy-related Methods">
     public void createGalaxy(String galaxyName)
     {
         //Check if there's something in the galaxyNameField
@@ -204,5 +213,7 @@ public class Main_GUI
         }
     }
     //</editor-fold>
+
+
 }
 
