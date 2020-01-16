@@ -4,8 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Main_GUI
-{
+public class Main_GUI {
     //initialize field variables
     public ArrayList<Galaxy> galaxies;
     //Intialize GUI Elements
@@ -34,8 +33,7 @@ public class Main_GUI
     private JLabel starRadiusLabel;
     private JLabel starTempLabel;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         //Initialize the GUI
         JFrame frame = new JFrame("Universe Simulator");
         frame.setContentPane(new Main_GUI().panel1);
@@ -44,22 +42,19 @@ public class Main_GUI
         frame.setVisible(true);
     }
 
-    public Main_GUI()
-    {
+    public Main_GUI() {
         //Creates new ArrayList of Galaxy
         galaxies = new ArrayList<Galaxy>();
         //Get the index of the selected item in the galaxy combo box
 
         //<editor-fold desc="Galaxy-related Elements">
-        galaxyCreationButton.addActionListener(new ActionListener()
-        {
+        galaxyCreationButton.addActionListener(new ActionListener() {
             @Override
             //Create galaxy with the name on button click from the form
-            public void actionPerformed(ActionEvent actionEvent)
-            {
-               createGalaxy(galaxyNameField.getText());
-               galaxyNameField.setText(null);
-               populateGalaxyComboBox();
+            public void actionPerformed(ActionEvent actionEvent) {
+                createGalaxy(galaxyNameField.getText());
+                galaxyNameField.setText(null);
+                populateGalaxyComboBox();
             }
         });
 
@@ -69,8 +64,7 @@ public class Main_GUI
             public void actionPerformed(ActionEvent actionEvent) {
                 //While galaxyComboIndex is used in other methods, it cannot be used outside of this scope
                 // within actionPerformed otherwise the integer is null
-                if(!galaxies.isEmpty())
-                {
+                if (!galaxies.isEmpty()) {
                     int galaxyComboIndex = galaxyNameList.getSelectedIndex();
                     //Remove the selected index in galaxies
                     galaxies.remove(galaxyComboIndex);
@@ -94,8 +88,7 @@ public class Main_GUI
             @Override
             //Create a solar system with a name.
             public void actionPerformed(ActionEvent actionEvent) {
-                if(!solarSystemNameField.getText().isEmpty())
-                {
+                if (!solarSystemNameField.getText().isEmpty()) {
                     int galaxyComboIndex = galaxyNameList.getSelectedIndex();
 
                     Galaxy targetGalaxy = galaxies.get(galaxyComboIndex);
@@ -104,52 +97,77 @@ public class Main_GUI
                     solarSystemNameField.setText(null);
                 }
                 //Give an error otherwise
-                else
-                {
-                    JOptionPane.showMessageDialog( new JFrame("popup"), "No name has been entered!", "Missing Name", JOptionPane.ERROR_MESSAGE);
+                else {
+                    JOptionPane.showMessageDialog(new JFrame("popup"), "No name has been entered!", "Missing Name", JOptionPane.ERROR_MESSAGE);
                 }
 
             }
         });
 
-        deleteSolarSystemButton.addActionListener(new ActionListener() {
+        deleteSolarSystemButton.addActionListener(new ActionListener()
+        {
             @Override
             //Remove the solar system in the solar system array
-            public void actionPerformed(ActionEvent actionEvent) {
-                if(!galaxies.isEmpty())
+            public void actionPerformed(ActionEvent actionEvent)
+            {
+                Galaxy targetGalaxy = getTargetGalaxy();
+                if (!targetGalaxy.solarSystems.isEmpty())
                 {
-                    int galaxyComboIndex = galaxyNameList.getSelectedIndex();
-                    Galaxy targetGalaxy;
-                    try
-                    {
-                        targetGalaxy = galaxies.get(galaxyComboIndex);
-                    }
-                    catch (IndexOutOfBoundsException e)
-                    {
-                        targetGalaxy = galaxies.get(0);
-                    }
-                    if(!targetGalaxy.solarSystems.isEmpty()) {
-                        int solSysComboIndex = solarSystemNameList.getSelectedIndex();
-                        //Remove the selected index in solar system
-                        targetGalaxy.solarSystems.remove(solSysComboIndex);
-                        populateGalaxyComboBox();
-                        populateSolarSystemComboBox();
-                    }
+                    int solSysComboIndex = solarSystemNameList.getSelectedIndex();
+                    //Remove the selected index in solar system
+                    targetGalaxy.solarSystems.remove(solSysComboIndex);
+                    populateGalaxyComboBox();
+                    populateSolarSystemComboBox();
                 }
             }
+
         });
         createStarButton.addActionListener(new ActionListener() {
             @Override
             //Create a star if all names, temp and such are valid
             public void actionPerformed(ActionEvent e) {
                 //Check if none of the fields are empty.
-                if(!starNameField.getText().isEmpty() || !starMassField.getText().isEmpty()
-                    || !starRadiusField.getText().isEmpty() || !starTempField.getText().isEmpty())
-                {
-                    
+                if (!starNameField.getText().isEmpty() || !starMassField.getText().isEmpty()
+                        || !starRadiusField.getText().isEmpty() || !starTempField.getText().isEmpty()) {
+                    SolarSystem target
                 }
             }
         });
+    }
+
+    public Galaxy getTargetGalaxy() {
+        if (!galaxies.isEmpty()) {
+            int galaxyComboIndex = galaxyNameList.getSelectedIndex();
+            Galaxy targetGalaxy;
+            try {
+                targetGalaxy = galaxies.get(galaxyComboIndex);
+            } catch (IndexOutOfBoundsException ee) {
+                targetGalaxy = galaxies.get(0);
+            }
+            return targetGalaxy;
+        }else {
+            return null;
+        }
+    }
+
+    public SolarSystem getTargetSolarSystem()
+    {
+        Galaxy targetGalaxy = getTargetGalaxy();
+            if(!targetGalaxy.solarSystems.isEmpty())
+
+        {
+            int solSysComboIndex = solarSystemNameList.getSelectedIndex();
+            SolarSystem targetSolarSystem;
+            try {
+                targetSolarSystem = targetGalaxy.solarSystems.get(solSysComboIndex);
+            } catch (IndexOutOfBoundsException ee) {
+                targetSolarSystem = targetGalaxy.solarSystems.get(0);
+            }
+            return targetSolarSystem;
+        }else{
+                return null;
+            }
+
     }
     //</editor-fold>
 
