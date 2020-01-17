@@ -14,7 +14,7 @@ public class SolarSystem
     }
 
     //Create a new Star and checks for the solarRadius to depict what class the star belongs to
-    void createStar(String starName, double starTemperature, int starMass, double solarRadius, int[] starPosition)
+    public void createStar(String starName, double starTemperature, int starMass, double solarRadius, int[] starPosition)
     {
         if(solarRadius <= 0.1)
         {
