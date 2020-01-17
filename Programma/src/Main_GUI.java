@@ -34,6 +34,12 @@ public class Main_GUI {
     private JLabel starTempLabel;
     private JPanel starSelectionPanel;
     private JComboBox starList;
+    private JTextField starPosX;
+    private JTextField starPosY;
+    private JPanel starCalcPanel;
+    private JComboBox starPosList1;
+    private JComboBox starPosList2;
+    private JButton calculateDistanceButton;
 
     public static void main(String[] args) {
         //Initialize the GUI
@@ -136,23 +142,66 @@ public class Main_GUI {
                     //check if starmass or starRadius are truly only numeric
                     if (starMassField.getText().matches("^[0-9]*$")
                             || starRadiusField.getText().matches("^[0-9]*$")
-                            || starTempField.getText().matches("^[0-9]*$"))
+                            || starTempField.getText().matches("^[0-9]*$")
+                            || starPosX.getText().matches("^[0-9]*$")
+                            || starPosY.getText().matches("^[0-9]*$"))
                     {
                         int starMass = Integer.parseInt(starMassField.getText());
                         float starTemp = Float.parseFloat(starTempField.getText());
                         float starRadius = Float.parseFloat(starRadiusField.getText());
+                        int[] starPos = new int[2];
+                        starPos[0] = Integer.parseInt(starPosX.getText());
+                        starPos[1] = Integer.parseInt(starPosY.getText());
                         SolarSystem targetSolarSystem = getTargetSolarSystem();
-                        targetSolarSystem.createStar(starName, starTemp, starMass, starRadius);
+                        targetSolarSystem.createStar(starName, starTemp, starMass, starRadius, starPos);
+                        populateStarComboBos();
                     }
                     else
                     {
-                        JOptionPane.showMessageDialog(new JFrame("popup"), "Star Mass,  Star Radius & Star Temp only accept numbers!", "Only Numbers", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(new JFrame("popup"), "Star Mass,  Star Radius, Star Pos & Star Temp only accept numbers!", "Only Numbers", JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 else
                 {
                     JOptionPane.showMessageDialog(new JFrame("popup"), "Some of Star's fields are empty!", "Empty Fields", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+        calculateDistanceButton.addActionListener(new ActionListener() {
+            //Calculate
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DistanceCalc DistCalc = (int[] starPos1, int[] starPos2) -> {
+                    //Calculate the distance between two stars in km
+                    {
+                        //int that shall be returned
+                        int distance = 0;
+                        //Make doubles for caluclation purposes
+                        double  xPos1 = starPos1[0];
+                        double  yPos1 = starPos1[1];
+                        double  xPos2 = starPos2[0];
+                        double  yPos2 = starPos2[1];
+                        //Check if both positions aren't the same
+                        if(xPos1 != xPos2 && yPos1 != yPos2)
+                        {
+                            //Calculate the distance between the two points
+                            distance = (int) Math.round(Math.sqrt(Math.exp((xPos1 - xPos2)) - Math.exp((yPos1 - yPos2))));
+                            return distance;
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(new JFrame("popup"), "The star is on the same position!", "Identical Star", JOptionPane.ERROR_MESSAGE);
+                            return distance;
+                        }
+                    }
+                 };
+                int posList1Index = starPosList1.getSelectedIndex();
+                int posList2Index = starPosList2.getSelectedIndex();
+                SolarSystem targetSolSys = getTargetSolarSystem();
+                int[] pos1 = targetSolSys.stars.get(posList1Index).getStarPosition();
+                int[] pos2 = targetSolSys.stars.get(posList2Index).getStarPosition();
+                int distance = DistCalc.calculateStarDistance(pos1, pos2);
+                JOptionPane.showMessageDialog(new JFrame("popup"), "The distance is "+distance, "Distance", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -257,6 +306,8 @@ public class Main_GUI {
         for(Star star : targetSolarSystem.stars)
         {
             starList.addItem(star);
+            starPosList1.addItem(star);
+            starPosList2.addItem(star);
         }
     }
 

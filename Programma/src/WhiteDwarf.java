@@ -1,10 +1,18 @@
-public class WhiteDwarf extends Star
+class WhiteDwarf extends Star
 {
 
 
-    public WhiteDwarf(String starName, double starTemperature, int starMass, double solarRadius)
+     WhiteDwarf(String starName, double starTemperature, int starMass, double solarRadius, int[] starPosition)
     {
-        super(starName, starTemperature, starMass, solarRadius);
+        super(starName, starTemperature, starMass, solarRadius, starPosition);
         starColor = "White";
     }
+
+   @Override
+    public void CreatePlanet(String planetName, int planetSize, int distanceFromStar, boolean hasAtmosphere)
+    {
+        planets.add(new Planet(planetName, planetSize, distanceFromStar, hasAtmosphere));
+    }
+
+
 }

@@ -1,9 +1,15 @@
-public class MainSequenceStar extends Star
+class MainSequenceStar extends Star
 {
 
-    public MainSequenceStar(String starName, double starTemperature, int starMass, double solarRadius)
+    MainSequenceStar(String starName, double starTemperature, int starMass, double solarRadius, int[] starPosition)
     {
-        super(starName, starTemperature, starMass, solarRadius);
+        super(starName, starTemperature, starMass, solarRadius, starPosition);
         starColor = "Yellow";
+    }
+
+    @Override
+    public void CreatePlanet(String planetName, int planetSize, int distanceFromStar, boolean hasAtmosphere)
+    {
+        planets.add(new Planet(planetName, planetSize, distanceFromStar, hasAtmosphere));
     }
 }

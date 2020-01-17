@@ -3,26 +3,29 @@ import java.util.ArrayList;
 abstract class Star
 {
     //A list of planets
-    public ArrayList<Planet> planets;
+    ArrayList<Planet> planets;
     //Name of star
-    public String starName;
+    String starName;
     //Temperature of the star in Kelvin
-    public double starTemperature;
+    double starTemperature;
+    //Position of the star
+    int[] starPosition;
     //Mass of a star in tonnes
-    public int starMass;
+    int starMass;
     //Radius of a star in starradius
-    public double solarRadius;
+    double solarRadius;
     //Colour of a star
-    public String starColor;
+    String starColor;
     //Boolean that determines whether or not a star can go supernova
-    public boolean canSuperNova;
+    boolean canSuperNova;
 
-    public Star(String starName, double starTemperature, int starMass, double solarRadius)
+    public Star(String starName, double starTemperature, int starMass, double solarRadius, int[] starPosition)
     {
         planets = new ArrayList<Planet>();
         this.starName = starName;
         this.starTemperature = starTemperature;
         this.starMass = starMass;
+        this.starPosition = starPosition;
         this.solarRadius = solarRadius;
         this.canSuperNova = false;
     }
@@ -73,15 +76,17 @@ abstract class Star
         return canSuperNova;
     }
 
+    public int[] getStarPosition() {
+        return starPosition;
+    }
+
+    //</editor-fold>
+
     public void setCanSuperNova(boolean canSuperNova) {
         this.canSuperNova = canSuperNova;
     }
-    //</editor-fold>
 
-    public void CreatePlanet(String planetName, int planetSize, int distanceFromStar, boolean hasAtmosphere)
-    {
-        planets.add(new Planet(planetName, planetSize, distanceFromStar, hasAtmosphere));
-    }
+    public abstract void CreatePlanet(String planetName, int planetSize, int distanceFromStar, boolean hasAtmosphere);
 
     @Override
     public String toString()
