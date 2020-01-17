@@ -32,6 +32,8 @@ public class Main_GUI {
     private JLabel starMassLabel;
     private JLabel starRadiusLabel;
     private JLabel starTempLabel;
+    private JPanel starSelectionPanel;
+    private JComboBox starList;
 
     public static void main(String[] args) {
         //Initialize the GUI
@@ -128,20 +130,46 @@ public class Main_GUI {
             public void actionPerformed(ActionEvent e) {
                 //Check if none of the fields are empty.
                 if (!starNameField.getText().isEmpty() || !starMassField.getText().isEmpty()
-                        || !starRadiusField.getText().isEmpty() || !starTempField.getText().isEmpty()) {
-                    SolarSystem target
+                        || !starRadiusField.getText().isEmpty() || !starTempField.getText().isEmpty())
+                {
+                    String starName = starNameField.getText();
+                    //check if starmass or starRadius are truly only numeric
+                    if (starMassField.getText().matches("^[0-9]*$")
+                            || starRadiusField.getText().matches("^[0-9]*$")
+                            || starTempField.getText().matches("^[0-9]*$"))
+                    {
+                        int starMass = Integer.parseInt(starMassField.getText());
+                        float starTemp = Float.parseFloat(starTempField.getText());
+                        float starRadius = Float.parseFloat(starRadiusField.getText());
+                        SolarSystem targetSolarSystem = getTargetSolarSystem();
+                        targetSolarSystem.createStar(starName, starTemp, starMass, starRadius);
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(new JFrame("popup"), "Star Mass,  Star Radius & Star Temp only accept numbers!", "Only Numbers", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(new JFrame("popup"), "Some of Star's fields are empty!", "Empty Fields", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
     }
 
-    public Galaxy getTargetGalaxy() {
-        if (!galaxies.isEmpty()) {
+    public Galaxy getTargetGalaxy()
+    {
+        //Get the target galaxy for usage in other methods
+        if (!galaxies.isEmpty())
+        {
             int galaxyComboIndex = galaxyNameList.getSelectedIndex();
             Galaxy targetGalaxy;
-            try {
+            try
+            {
                 targetGalaxy = galaxies.get(galaxyComboIndex);
-            } catch (IndexOutOfBoundsException ee) {
+            }
+            catch (IndexOutOfBoundsException ee)
+            {
                 targetGalaxy = galaxies.get(0);
             }
             return targetGalaxy;
@@ -151,9 +179,10 @@ public class Main_GUI {
     }
 
     public SolarSystem getTargetSolarSystem()
+    //Get the target solar system for usage in other methods
     {
         Galaxy targetGalaxy = getTargetGalaxy();
-            if(!targetGalaxy.solarSystems.isEmpty())
+        if(!targetGalaxy.solarSystems.isEmpty())
 
         {
             int solSysComboIndex = solarSystemNameList.getSelectedIndex();
@@ -164,9 +193,11 @@ public class Main_GUI {
                 targetSolarSystem = targetGalaxy.solarSystems.get(0);
             }
             return targetSolarSystem;
-        }else{
-                return null;
-            }
+        }
+        else
+        {
+            return null;
+        }
 
     }
     //</editor-fold>
@@ -206,32 +237,28 @@ public class Main_GUI {
     {
         //This populates the solar system combo box after a removal or addition to the arrayList or whenever a new galaxy is selected
         //The combo list only displays the galaxy's name and is used to select the specific galaxies
-        int galaxyComboIndex = galaxyNameList.getSelectedIndex();
         solarSystemNameList.removeAllItems();
-        if(!galaxies.isEmpty())
-        {
-            Galaxy targetGalaxy;
-            try
-            {
-                targetGalaxy = galaxies.get(galaxyComboIndex);
+        Galaxy targetGalaxy = getTargetGalaxy();
+            for (SolarSystem solarsystem : targetGalaxy.solarSystems) {
+                //For each solar system in the solarSystem array list, add the name of the galaxy to the combo box
+                solarSystemNameList.addItem(solarsystem);
             }
-            catch (IndexOutOfBoundsException e)
-            {
-                targetGalaxy = galaxies.get(0);
-            }
-            if(!targetGalaxy.solarSystems.isEmpty())
-            {
-                for (SolarSystem solarsystem : targetGalaxy.solarSystems)
-                {
-                    //For each solar system in the solarSystem array list, add the name of the galaxy to the combo box
-                    solarSystemNameList.addItem(solarsystem);
 
-                }
-            }
-        }
     }
+
     //</editor-fold>
 
+    public void populateStarComboBos()
+    {
+        //This populates the star combo box after a removal or addition to the arrayList or whenever a new solar system is selected
+        //The combo list only displays the star's name and type and is used to select the specific stars
+        starList.removeAllItems();
+        SolarSystem targetSolarSystem = getTargetSolarSystem();
+        for(Star star : targetSolarSystem.stars)
+        {
+            starList.add(star);
+        }
+    }
 
 }
 

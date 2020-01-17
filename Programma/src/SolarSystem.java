@@ -14,23 +14,23 @@ public class SolarSystem
     }
 
     //Create a new Star and checks for the solarRadius to depict what class the star belongs to
-    public void CreateStar(String starName, String starTemperature, int starMass, double solarRadius)
+    public void createStar(String starName, double starTemperature, int starMass, double solarRadius)
     {
         if(solarRadius <= 0.1)
         {
-            new WhiteDwarf(starName, starTemperature, starMass, solarRadius);
+            stars.add(new WhiteDwarf("White Dwarf " + starName , starTemperature, starMass, solarRadius));
         }
         else if(solarRadius > 0.1 && solarRadius <= 10)
         {
-            new PulsarStar(starName, starTemperature, starMass, solarRadius);
+            stars.add(new PulsarStar("Pulsar Star " + starName, starTemperature, starMass, solarRadius));
         }
         else if(solarRadius > 10 && solarRadius < 1000)
         {
-            new MainSequenceStar(starName, starTemperature, starMass, solarRadius);
+            stars.add(new MainSequenceStar("Main Sequence Star " + starName, starTemperature, starMass, solarRadius));
         }
         else
         {
-            new RedGiant(starName, starTemperature, starMass, solarRadius);
+            stars.add(new RedGiant("Red Giant " + starName, starTemperature, starMass, solarRadius));
         }
     }
 

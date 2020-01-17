@@ -7,7 +7,7 @@ abstract class Star
     //Name of star
     public String starName;
     //Temperature of the star in Kelvin
-    public String starTemperature;
+    public double starTemperature;
     //Mass of a star in tonnes
     public int starMass;
     //Radius of a star in starradius
@@ -17,7 +17,7 @@ abstract class Star
     //Boolean that determines whether or not a star can go supernova
     public boolean canSuperNova;
 
-    public Star(String starName, String starTemperature, int starMass, double solarRadius)
+    public Star(String starName, double starTemperature, int starMass, double solarRadius)
     {
         planets = new ArrayList<Planet>();
         this.starName = starName;
@@ -44,13 +44,6 @@ abstract class Star
         this.starName = starName;
     }
 
-    public String getStarTemperature() {
-        return starTemperature;
-    }
-
-    public void setStarTemperature(String starTemperature) {
-        this.starTemperature = starTemperature;
-    }
 
     public int getStarMass() {
         return starMass;
