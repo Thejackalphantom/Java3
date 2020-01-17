@@ -256,7 +256,7 @@ public class Main_GUI {
         SolarSystem targetSolarSystem = getTargetSolarSystem();
         for(Star star : targetSolarSystem.stars)
         {
-            starList.add(star);
+            starList.addItem(star);
         }
     }
 

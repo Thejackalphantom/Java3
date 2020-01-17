@@ -83,5 +83,9 @@ abstract class Star
         planets.add(new Planet(planetName, planetSize, distanceFromStar, hasAtmosphere));
     }
 
-
+    @Override
+    public String toString()
+    {
+        return this.starName;
+    }
 }
