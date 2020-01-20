@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Main_GUI {
     //initialize field variables
     public ArrayList<Galaxy> galaxies;
-    //Intialize GUI Elements
+    //Initialize GUI Elements
     private JButton galaxyCreationButton;
     private JPanel panel1;
     private JTextField galaxyNameField;
