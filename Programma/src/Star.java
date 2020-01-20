@@ -12,7 +12,7 @@ abstract class Star
     int[] starPosition;
     //Mass of a star in tonnes
     int starMass;
-    //Radius of a star in starradius
+    //Radius of a star in starRadius
     double solarRadius;
     //Colour of a star
     String starColor;

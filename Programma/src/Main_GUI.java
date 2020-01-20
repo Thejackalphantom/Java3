@@ -40,6 +40,7 @@ public class Main_GUI {
     private JComboBox starPosList1;
     private JComboBox starPosList2;
     private JButton calculateDistanceButton;
+    private JButton deleteStarButton;
 
     public static void main(String[] args) {
         //Initialize the GUI
@@ -167,6 +168,7 @@ public class Main_GUI {
                 }
             }
         });
+
         calculateDistanceButton.addActionListener(new ActionListener() {
             //Calculate
             @Override
